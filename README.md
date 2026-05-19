@@ -170,7 +170,7 @@ curl -X POST http://localhost:3000/credentials \
 
 Quick version:
 
-1. Deploy repo `Sakh2holdings/for-you-rss` to Railway project **serene-grace** (GitHub deploy)
+1. Deploy repo `Saklh2holdings/for-you-rss` to Railway project **for-you-rss** (GitHub deploy)
 2. Mount volume at `/data`, set `COOKIES_DIR` / `OUTPUT_DIR` to `/data/cookies` and `/data/output`
 3. Set `PUBLIC_BASE_URL` + `ADMIN_API_KEY` on Railway
 4. Extension Options → Railway URL + same API key → **Sync** all platforms

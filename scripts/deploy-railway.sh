@@ -9,7 +9,7 @@ if [[ -z "${RAILWAY_TOKEN:-}" ]]; then
   exit 1
 fi
 
-echo "Linking to Railway project (choose serene-grace / production)..."
+echo "Linking to Railway project (choose for-you-rss / production)..."
 npx @railway/cli link
 
 echo "Deploying..."

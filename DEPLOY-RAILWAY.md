@@ -16,17 +16,17 @@
 
 ## Step 1 — Deploy on Railway (GitHub — recommended)
 
-You already have repo: `Sakh2holdings/for-you-rss`  
-Project: **serene-grace**
+You already have repo: `Saklh2holdings/for-you-rss`  
+Project: **for-you-rss**
 
-1. Railway dashboard → project **serene-grace**
+1. Railway dashboard → project **for-you-rss**
 2. Click **+ New** → **GitHub Repo** → select **for-you-rss**
 3. Railway detects Node and uses `railway.json`:
    - Build: `npm ci && npm run build`
    - Start: `npm run start`
    - Health: `/health`
 4. Wait until deploy shows **Active** and copy the public URL  
-   (e.g. `https://serene-grace-production.up.railway.app`)
+   (e.g. `https://for-you-rss-production.up.railway.app`)
 
 ---
 
@@ -104,7 +104,7 @@ On Railway: **Project Settings → Tokens → Create** (production).
 ```bash
 cd /Users/sak/Desktop/foryou-rss
 export RAILWAY_TOKEN="your_project_token"
-npx @railway/cli link    # pick serene-grace → production
+npx @railway/cli link    # pick for-you-rss → production
 npx @railway/cli up
 ```
 
@@ -119,7 +119,7 @@ cd /Users/sak/Desktop/foryou-rss
 git init
 git add .
 git commit -m "ForYou RSS: Railway-ready deploy"
-git remote add origin https://github.com/Sakh2holdings/for-you-rss.git
+git remote add origin https://github.com/Saklh2holdings/for-you-rss.git
 git push -u origin main
 ```
 

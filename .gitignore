@@ -6,3 +6,5 @@ output/
 .DS_Store
 .env
 cookie.env
+cookies/access.env
+**/access.env
