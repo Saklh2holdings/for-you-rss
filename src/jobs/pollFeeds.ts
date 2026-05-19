@@ -6,6 +6,7 @@ import {
   loadRedditCookie,
 } from '../storage/credentialsStore.js';
 import { writeFeedXml, updateMeta } from '../storage/feedCache.js';
+import { readBrowserItems } from '../storage/browserFeedStore.js';
 import { buildFeed } from '../rss/buildFeed.js';
 import { fetchTwitterFeed } from '../fetchers/twitter.js';
 import { fetchYouTubeFeed } from '../fetchers/youtube.js';
@@ -54,7 +55,17 @@ export async function pollOnePlatform(platform: Platform): Promise<PollResult> {
         console.log(`${tag} No credentials — skipping`);
         return { ok: false, skipped: true, error: 'No credentials stored. POST /credentials first.' };
       }
-      items = await fetchYouTubeFeed(cookie);
+      const browserItems = await readBrowserItems('youtube');
+      try {
+        items = await fetchYouTubeFeed(cookie);
+      } catch (err) {
+        if (browserItems.length > 0) {
+          console.log(`${tag} Server fetch failed; using ${browserItems.length} browser-pushed items`);
+          items = browserItems;
+        } else {
+          throw err;
+        }
+      }
     } else if (platform === 'instagram') {
       const creds = await loadInstagramCredentials();
       if (!creds) {

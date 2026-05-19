@@ -404,6 +404,45 @@ async function syncPlatforms(platforms, serverUrl, adminApiKey, intercepted) {
 // ---- Message handlers (used by popup and content scripts) ----
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === 'YOUTUBE_ITEMS') {
+    const items = message.items;
+    if (!Array.isArray(items) || !items.length) {
+      sendResponse({ ok: false, error: 'No items received' });
+      return false;
+    }
+
+    chrome.storage.sync.get(['serverUrl', 'adminApiKey'], async (syncResult) => {
+      const serverUrl = (syncResult.serverUrl ?? 'http://localhost:3000').replace(/\/$/, '');
+      const adminApiKey = syncResult.adminApiKey ?? '';
+
+      const headers = { 'Content-Type': 'application/json' };
+      if (adminApiKey) headers['Authorization'] = `Bearer ${adminApiKey}`;
+
+      try {
+        const res = await fetch(`${serverUrl}/feed/youtube`, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ items }),
+        });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          sendResponse({
+            ok: false,
+            error: json.error ?? `Server returned ${res.status}`,
+          });
+          return;
+        }
+        sendResponse({
+          ok: true,
+          itemCount: json.itemCount ?? items.length,
+        });
+      } catch {
+        sendResponse({ ok: false, error: 'Server unreachable' });
+      }
+    });
+    return true;
+  }
+
   if (message.type === 'TIKTOK_ITEMS') {
     const items = message.items;
     if (!Array.isArray(items) || !items.length) {
