@@ -1,0 +1,8 @@
+node_modules/
+dist/
+cookies/
+output/
+*.log
+.DS_Store
+.env
+cookie.env
