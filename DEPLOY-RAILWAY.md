@@ -14,19 +14,23 @@
 
 ---
 
-## Step 1 — Deploy on Railway (GitHub — recommended)
+## Step 1 — Deploy on Railway (GitHub auto-deploy)
 
-You already have repo: `Saklh2holdings/for-you-rss`  
-Project: **for-you-rss**
+Repo: `Saklh2holdings/for-you-rss` · Project: **for-you-rss**
 
-1. Railway dashboard → project **for-you-rss**
-2. Click **+ New** → **GitHub Repo** → select **for-you-rss**
-3. Railway detects Node and uses `railway.json`:
-   - Build: `npm ci && npm run build`
-   - Start: `npm run start`
-   - Health: `/health`
-4. Wait until deploy shows **Active** and copy the public URL  
-   (e.g. `https://for-you-rss-production.up.railway.app`)
+**Auto-deploy on push to `main`** is wired via GitHub Actions (`.github/workflows/deploy-railway.yml`).  
+The repo secret `RAILWAY_TOKEN` is your Railway **project token** (Settings → Tokens).
+
+Each push to `main` runs `railway up --ci --service for-you-rss`, which builds with `railway.json` and deploys.
+
+Production URL: `https://for-you-rss-production.up.railway.app`
+
+Manual deploy from your Mac (optional):
+
+```bash
+export RAILWAY_TOKEN="your_project_token"
+./scripts/deploy-railway.sh
+```
 
 ---
 
